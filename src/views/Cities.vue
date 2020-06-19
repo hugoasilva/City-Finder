@@ -1,5 +1,70 @@
 <template>
   <div class="cities">
-    <h1>Cities</h1>
+    <div class="col-md-8 offset-md-2 text-center pt-4">
+      <div class="jumbotron">
+        <h1 class="display-4">Cidades</h1>
+        <div class="text-center">
+          <table class="table countryTable">
+            <thead>
+              <th class="bg-primary">Cidades</th>
+            </thead>
+            <tbody>
+              <tr v-for="city in cities.data" v-bind:key="city">
+                <th scope="row">
+                  <a
+                    v-bind:href="'/cities/' + city.id"
+                    class="list-group-item-action"
+                    >{{ city.name }}
+                  </a>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "app",
+  data() {
+    return {
+      cities: []
+    };
+  },
+  async created() {
+    try {
+      const res = await axios.get(
+        "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10",
+        {
+          method: "GET",
+          headers: {
+            "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
+            "x-rapidapi-key":
+              "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
+          }
+        }
+      );
+      this.cities = res.data;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+};
+</script>
+
+<style scoped>
+.countryTable {
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  border-width: 3px;
+  border-style: solid;
+}
+</style>

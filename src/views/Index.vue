@@ -9,27 +9,28 @@
           viagens,consulte todas as informações sobre cidades e conheça as suas
           moedas.
         </p>
+        <div class="text-center">
+          <h2>Conheça as 10 cidades mais populosas</h2>
+          <table class="table cityTable">
+            <thead>
+              <th class="bg-primary">Cidade</th>
+            </thead>
+            <tbody>
+              <tr v-for="city in mostPopulated.data" v-bind:key="city">
+                <th scope="row">
+                  <a
+                    v-bind:href="'/cities/' + city.id"
+                    class="list-group-item-action"
+                    >{{ city.city }}
+                  </a>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <div class="text-center">
-      <h2>Conheça as 10 cidades mais populosas</h2>
-      <table class="table cityTable">
-        <thead>
-          <th class="bg-primary">Cidade</th>
-        </thead>
-        <tbody>
-          <tr v-for="city in mostPopulated.data" v-bind:key="city">
-            <th scope="row">
-              <a
-                v-bind:href="'/cities/' + city.id"
-                class="list-group-item-action"
-                >{{ city.city }}
-              </a>
-            </th>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    
   </div>
 </template>
 
@@ -69,7 +70,7 @@ export default {
   margin: 20px;
   margin-left: auto;
   margin-right: auto;
-  width: 10%;
+  width: 20%;
   border-width: 3px;
   border-style: solid;
 }

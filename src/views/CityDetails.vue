@@ -1,29 +1,33 @@
 <template>
   <div class="text-center">
-    <h2>{{ cityDetails.data.name }}</h2>
-    <table class="table cityTable">
-      <thead>
-        <th class="bg-primary" colspan="2">{{ cityDetails.data.name }}</th>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">País</th>
-          <td><a v-bind:href="'/countries/' + cityDetails.data.countryCode">{{ cityDetails.data.country }}</a></td>
-        </tr>
-        <tr>
-          <th scope="row">Região</th>
-          <td>{{ cityDetails.data.region }}</td>
-        </tr>
-        <tr>
-          <th scope="row">População</th>
-          <td>{{ cityDetails.data.population }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <h2>{{ cityDetails.data.name }} no mapa</h2>
-    <div id="map">
-      <Map :lat="cityDetails.data.latitude" :long="cityDetails.data.longitude" />
-    </div>
+    <div class="col-md-8 offset-md-2 text-center pt-4">
+      <div class="jumbotron">
+        <h1 class="display-4">{{ cityDetails.data.name }}</h1>
+        <table class="table cityTable">
+          <thead>
+            <th class="bg-primary" colspan="2">{{ cityDetails.data.name }}</th>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">País</th>
+              <td><a v-bind:href="'/countries/' + cityDetails.data.countryCode">{{ cityDetails.data.country }}</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Região</th>
+              <td>{{ cityDetails.data.region }}</td>
+            </tr>
+            <tr>
+              <th scope="row">População</th>
+              <td>{{ cityDetails.data.population }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <h2>{{ cityDetails.data.name }} no mapa</h2>
+        <div id="map">
+          <Map :lat="cityDetails.data.latitude" :long="cityDetails.data.longitude" />
+        </div>
+      </div>
+    </div>    
   </div>
 </template>
 
@@ -38,12 +42,13 @@ export default {
   },
   data() {
     return {
-      cityDetails: []
+      cityDetails: [],
+      time: String
     };
   },
   async created() {
     try {
-      const res = await axios.get(
+      const city = await axios.get(
         "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" +
           this.$route.params.id,
         {
@@ -55,11 +60,11 @@ export default {
           }
         }
       );
-      this.cityDetails = res.data;
+      this.cityDetails = city.data;
     } catch (e) {
       console.error(e);
     }
-  }
+  },
 };
 </script>
 

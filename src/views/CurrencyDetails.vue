@@ -1,7 +1,29 @@
 <template>
   <div class="text-center">
-    <h1>ID: {{ this.$route.params.id }}</h1>
-    {{ Currencies.data[this.$route.params.id].code }}
+    <div class="col-md-8 offset-md-2 text-center pt-4">
+      <div class="jumbotron">
+        <h1 class="display-4">{{ currencyDetails.code }}</h1>
+        <p class="lead">
+          Esta moeda é usada nos seguintes países:
+        </p>
+        <table class="table currencyTable">
+          <thead>
+            <th class="bg-primary" colspan="2"></th>
+          </thead>
+          <tbody>
+            <tr v-for="country in currencyDetails.countryCodes" v-bind:key="country">
+              <th scope="row">
+                <a
+                  v-bind:href="'/countries/' + country"
+                  class="list-group-item-action"
+                  >{{ country }}
+                </a>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>   
   </div>
 </template>
 
@@ -12,24 +34,38 @@ export default {
   name: "app",
   data() {
     return {
-      Currencies
+      Currencies,
+      currencyDetails: []
     };
+  },
+  mounted() {
+    let currencyId = this.$route.params.id;
+
+    // iterate over each element in the array
+    for (let i = 0; i < Currencies.data.length; i++){
+      // look for the entry with a matching `code` value
+      if (Currencies.data[i].code == currencyId){
+        this.currencyDetails = Currencies.data[i];
+        // we found it
+        // obj[i].name is the matched result
+      }
+    }
+    console.log(this.currencyDetails)
+    
   }
 };
 </script>
 
-<style>
-.countryTable {
+<style scoped>
+h2 {
+  margin: 20px;
+}
+
+.currencyTable {
   margin: 20px;
   margin-left: auto;
   margin-right: auto;
   width: 20%;
-  border-width: 3px;
-  border-style: solid;
-}
-
-#flag {
-  height: 100px;
   border-width: 3px;
   border-style: solid;
 }
