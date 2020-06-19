@@ -8,7 +8,7 @@
       <tbody>
         <tr>
           <th scope="row">País</th>
-          <td>{{ cityDetails.data.country }}</td>
+          <td><a v-bind:href="'/countries/' + cityDetails.data.countryCode">{{ cityDetails.data.country }}</a></td>
         </tr>
         <tr>
           <th scope="row">Região</th>

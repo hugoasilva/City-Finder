@@ -1,7 +1,26 @@
 <template>
   <div class="text-center">
-    <h1>City ID: {{ countryDetails.data.code }}</h1>
-    <h2>Currency: {{ countryDetails.data.currencyCodes[0] }}</h2>
+    <h2 class="mt-2">{{ countryDetails.data.name }}</h2>
+    <img id="flag" :src="countryDetails.data.flagImageUri" alt="Bandeira">
+    <table class="table countryTable">
+      <thead>
+        <th class="bg-primary" colspan="2"></th>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Código</th>
+          <td>{{ countryDetails.data.code }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Moeda</th>
+          <td>{{ countryDetails.data.currencyCodes[0] }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Nr Regiões</th>
+          <td>{{ countryDetails.data.numRegions }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -37,4 +56,18 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.countryTable {
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  border-width: 3px;
+  border-style: solid;
+}
+
+#flag {
+  height: 100px;
+
+}
+</style>
