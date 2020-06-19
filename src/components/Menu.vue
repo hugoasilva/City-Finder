@@ -26,16 +26,24 @@
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
+            <div class="btn-group btn-group-toggle mr-sm-2 mx-2" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>Cidade
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option2" autocomplete="off"> País
+              </label>
+            </div>
             <input class="form-control mr-sm-2 mx-2" type="search" placeholder="Pesquise um país ou cidade..." aria-label="Search">
-            <button class="btn btn-secondary btn-success my-2 my-sm-0" type="submit">Pesquisar</button>
+            <button class="btn btn-secondary btn-success my-2 my-sm-0 mr-sm-2" type="submit">Pesquisar</button>
           </form>
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Lang
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button class="dropdown-item" type="button"><img src="@/assets/en.png" alt="English" /> EN</button>
-              <button class="dropdown-item" type="button"><img src="@/assets/pt.png" alt="Português" /> PT</button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+              <button class="dropdown-item text-center" type="button"><img src="@/assets/en.png" alt="English" /> EN</button>
+              <button class="dropdown-item text-center" type="button"><img src="@/assets/pt.png" alt="Português" /> PT</button>
             </div>
           </div>
         </div>
@@ -69,5 +77,9 @@ export default {
 .image {
   display: block;
   height: 100px;
+}
+
+.dropdown-menu {
+    width: 0mm;
 }
 </style>
