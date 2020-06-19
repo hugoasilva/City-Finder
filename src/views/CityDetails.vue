@@ -20,14 +20,22 @@
         </tr>
       </tbody>
     </table>
+    <h2>{{ cityDetails.data.name }} no mapa</h2>
+    <div id="map">
+      <Map :lat="cityDetails.data.latitude" :long="cityDetails.data.longitude" />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import Map from "../components/Map.vue"
 
 export default {
   name: "app",
+  components: {
+    Map
+  },
   data() {
     return {
       cityDetails: []
