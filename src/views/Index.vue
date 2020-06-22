@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+  <vue-title :title="'City Finder'"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">City Finder</h1>

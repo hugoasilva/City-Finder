@@ -1,5 +1,6 @@
 <template>
   <div class="text-center">
+    <vue-title :title="'Currency Details - ' + currencyDetails.code"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">{{ currencyDetails.code }}</h1>
@@ -41,17 +42,12 @@ export default {
   mounted() {
     let currencyId = this.$route.params.id;
 
-    // iterate over each element in the array
     for (let i = 0; i < Currencies.data.length; i++){
-      // look for the entry with a matching `code` value
       if (Currencies.data[i].code == currencyId){
         this.currencyDetails = Currencies.data[i];
-        // we found it
-        // obj[i].name is the matched result
       }
     }
     console.log(this.currencyDetails)
-    
   }
 };
 </script>

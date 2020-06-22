@@ -14,28 +14,28 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Index",
-    component: Index
+    name: "",
+    component: Index,
   },
   {
     path: "/cities",
     name: "Cities",
-    component: Cities
+    component: Cities,
   },
   {
     path: "/cities/:id",
     name: "City Details",
-    component: CityDetails
+    component: CityDetails,
   },
   {
     path: "/countries",
     name: "Countries",
-    component: Countries
+    component: Countries,
   },
   {
     path: "/countries/:id",
     name: "Country Details",
-    component: CountryDetails
+    component: CountryDetails,
   },
   {
     path: "/currencies",
@@ -45,13 +45,13 @@ const routes = [
   {
     path: "/currencies/:id",
     name: "Currency Details",
-    component: CurrencyDetails
+    component: CurrencyDetails,
   },
   {
     path: "/routes",
     name: "Routes",
-    component: Routes
-  }
+    component: Routes,
+  },
 ];
 
 const router = new VueRouter({
@@ -59,5 +59,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+
 
 export default router;

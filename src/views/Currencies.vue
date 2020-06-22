@@ -1,18 +1,25 @@
 <template>
   <div class="currencies">
-    <h1 class="pt-3 pb-3 text-center">Currencies</h1>
-    <div class="text-center">
-      <div class="container pb-3">
-        <div class="row">
-          <div class="col-sm">
-            Euro
-          </div>
-          <div class="col-sm">
-            USD
-          </div>
-          <div class="col-sm">
-            AUD
-          </div>
+    <div class="col-md-8 offset-md-2 text-center pt-4">
+      <div class="jumbotron">
+        <h1 class="display-4">Moedas</h1>
+        <div class="text-center">
+          <table class="table currencyTable">
+            <thead>
+              <th class="bg-primary">Moedas</th>
+            </thead>
+            <tbody>
+              <tr v-for="currency in Currencies.data.slice(0, 10)" v-bind:key="currency">
+                <th scope="row">
+                  <a
+                    v-bind:href="'/currencies/' + currency.code"
+                    class="list-group-item-action"
+                    >{{ currency.code }}
+                  </a>
+                </th>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -20,10 +27,29 @@
 </template>
 
 <script>
+import Currencies from "../assets/currencies.json"
+
 export default {
-  
-}
+  name: "app",
+  data() {
+    return {
+      Currencies,
+    };
+  },
+};
 </script>
 
 <style>
+h2 {
+  margin: 20px;
+}
+
+.currencyTable {
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+  border-width: 3px;
+  border-style: solid;
+}
 </style>
