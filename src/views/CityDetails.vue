@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <vue-title :title="'City Details - ' + this.cityDetails.data.name"></vue-title>
+    <vue-title v-if="this.cityDetails.data" :title="'City Details - ' + this.cityDetails.data.name"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 v-if="this.cityDetails.data" class="display-4">{{ this.cityDetails.data.name }}</h1>
@@ -20,6 +20,10 @@
             <tr>
               <th scope="row">População</th>
               <td v-if="this.cityDetails.data">{{ this.cityDetails.data.population }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Código Área</th>
+              <td v-if="this.cityDetails.data">{{ this.cityDetails.data.regionCode }}</td>
             </tr>
             <tr>
               <th scope="row">Hora Local</th>
@@ -72,11 +76,12 @@ export default {
       );
       this.cityDetails = city.data;
       
-      const weather = await axios.get("https://api.openweathermap.org/data/2.5/weather?q=" +
-        this.cityDetails.data.name + "," + this.cityDetails.data.countryCode + "&appid=70d3a999d3c296c94f63808ba7d299e5&units=metric")
+      const weather = await axios.get("https://api.openweathermap.org/data/2.5/weather?lat=" +
+        this.cityDetails.data.latitude + "&lon=" + this.cityDetails.data.longitude + 
+        "&appid=70d3a999d3c296c94f63808ba7d299e5&units=metric")
       this.weather.data = weather.data.main.temp;
 
-      this.sleep(800)
+      this.sleep(1000)
         .then(async () => {
       const time = await axios.get(
         "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" +
@@ -94,6 +99,7 @@ export default {
       this.time.localTime = this.time[0]
       })
     } catch (e) {
+      window.location = "/404"
       console.error(e);
     }
     

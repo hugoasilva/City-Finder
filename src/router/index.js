@@ -8,6 +8,7 @@ import CountryDetails from "../views/CountryDetails.vue";
 import Currencies from "../views/Currencies.vue";
 import CurrencyDetails from "../views/CurrencyDetails.vue"
 import Routes from "../views/Routes.vue";
+import NotFound from "../views/NotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -52,6 +53,11 @@ const routes = [
     name: "Routes",
     component: Routes,
   },
+  {
+    path: "/404",
+    name: "404 - Not Found",
+    component: NotFound,
+  }
 ];
 
 const router = new VueRouter({

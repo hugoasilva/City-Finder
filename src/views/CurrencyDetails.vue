@@ -46,6 +46,12 @@ export default {
       if (Currencies.data[i].code == currencyId){
         this.currencyDetails = Currencies.data[i];
       }
+      else {
+        this.currencyDetails = 0;
+      }
+    }
+    if (this.currencyDetails === 0) {
+      window.location = "/404"
     }
     console.log(this.currencyDetails)
   }

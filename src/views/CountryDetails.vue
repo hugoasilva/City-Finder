@@ -63,6 +63,7 @@ export default {
       this.countryDetails = res.data;
     } catch (e) {
       console.error(e);
+      window.location = "/404"
     }
   }
 };
