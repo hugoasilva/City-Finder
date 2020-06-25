@@ -1,5 +1,6 @@
 <template>
   <div class="currencies">
+    <vue-title :title="'City List'"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">Moedas</h1>

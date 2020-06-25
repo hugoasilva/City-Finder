@@ -81,8 +81,7 @@ export default {
         "&appid=70d3a999d3c296c94f63808ba7d299e5&units=metric")
       this.weather.data = weather.data.main.temp;
 
-      this.sleep(1000)
-        .then(async () => {
+      await this.sleep(1000)
       const time = await axios.get(
         "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" +
           this.$route.params.id + "/time",
@@ -97,7 +96,7 @@ export default {
       );
       this.time = time.data.data.split(".");
       this.time.localTime = this.time[0]
-      })
+      
     } catch (e) {
       window.location = "/404"
       console.error(e);

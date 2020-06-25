@@ -17,7 +17,7 @@
               <th class="bg-primary">Cidade</th>
             </thead>
             <tbody>
-              <tr v-for="city in mostPopulated.data" v-bind:key="city">
+              <tr v-for="city in mostPopulated.data" :key="city.id">
                 <th scope="row">
                   <a
                     v-bind:href="'/cities/' + city.id"
@@ -59,6 +59,8 @@ export default {
         }
       );
       this.mostPopulated = res.data;
+      this.mostPopulated.data.sort((a, b) => a.name < b.name ? -1 : 1)
+
     } catch (e) {
       console.error(e);
     }

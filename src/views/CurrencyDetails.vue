@@ -43,16 +43,19 @@ export default {
     let currencyId = this.$route.params.id;
 
     for (let i = 0; i < Currencies.data.length; i++){
+      console.log(Currencies.data[i].code, currencyId)
       if (Currencies.data[i].code == currencyId){
         this.currencyDetails = Currencies.data[i];
+        break;
       }
       else {
         this.currencyDetails = 0;
       }
     }
-    if (this.currencyDetails === 0) {
+    if (this.currencyDetails == 0) {
       window.location = "/404"
     }
+
     console.log(this.currencyDetails)
   }
 };

@@ -15,9 +15,9 @@
           placeholder="Pesquise um país ou cidade..."
           aria-label="Search"
           size="21"
-          @input="onChange"
+          @input="debounceMethod"
         />
-        <ul v-show="isOpen" class="autocomplete-results">
+        <ul v-show="isOpen" class="autocomplete-results" clickaway="away">
           <li class="loading" v-if="isLoading">Loading results...</li>
           <li
             v-else
@@ -25,7 +25,7 @@
             :key="i"
             @click="setResult(result)"
             class="autocomplete-result pl-3"
-          >{{ result }}</li>
+          >{{ result.city + ", " + result.country }}</li>
         </ul>
       </div>
       <button class="btn btn-secondary btn-light my-2 my-sm-0 mr-sm-2" type="submit">Pesquisar</button>
@@ -35,58 +35,59 @@
 
 <script>
 import axios from "axios";
+import debounce from "lodash/debounce"
+import { mixin as clickaway } from 'vue-clickaway';
 
 export default {
+  mixins: [ clickaway ],
   data() {
     return {
       search: "",
       results: [],
       selected: "city",
-      searchDetails: [],
       isAsync: {
         type: Boolean,
         default: false
       },
       isLoading: false,
-      arrowCounter: 0
+      arrowCounter: 0,
+      isOpen: false
     };
   },
-  methods: {
-    sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+  computed: {
+    debounceMethod() {
+      return debounce(this.onChange, 1000)
     },
+  },
+  methods: {
     async onChange() {
-      if (this.search.length % 3 == 0) {
-        try {
-          const search = await axios.get(
-            "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&namePrefix=" +
-              this.search,
-            {
-              method: "GET",
-              headers: {
-                "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
-                "x-rapidapi-key":
-                  "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
-              }
+      try {
+        const search = await axios.get(
+          "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&namePrefix=" +
+            this.search,
+          {
+            method: "GET",
+            headers: {
+              "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
+              "x-rapidapi-key":
+                "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
             }
-          );
-          this.searchDetails = search.data;
-        } catch (e) {
-          this.sleep(1000);
-        }
-        console.log(this.searchDetails.data);
+          }
+        );
+        this.results = search.data.data;
+      } catch (e) {
+        console.log(e);
       }
+      // console.log(this.results);
       this.isOpen = true;
-      this.filterResults();
       if(this.search == "") {
         this.isOpen = false;
       }
     },
-    filterResults() {
-      for (let i = 0; i < this.searchDetails.data.length; i++){
-        this.results = this.searchDetails[i].name;
-      }
-    }
+  },
+  away: function() {
+    console.log("oi")
+    this.isOpen = false;
   }
 };
 </script>
@@ -103,7 +104,7 @@ export default {
     border: 1px solid #ccc;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
-    border-radius: 5px;
+    border-radius: 10px;
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
