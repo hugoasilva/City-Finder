@@ -14,9 +14,9 @@
           <h2>Conheça as 10 cidades mais populosas</h2>
           <table class="table cityTable">
             <thead>
-              <caption>Cidade</caption>
               <th class="bg-primary">Cidade</th>
             </thead>
+            <caption>Cidade</caption>
             <tbody>
               <tr v-for="city in mostPopulated.data" :key="city.id">
                 <th scope="row">
@@ -76,5 +76,9 @@ export default {
   width: 20%;
   border-width: 3px;
   border-style: solid;
+}
+
+caption {
+  visibility: hidden;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="countries">
-  <vue-title :title="'Country List'"></vue-title>
+  <vue-title title="Lista de Paíes"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">Países</h1>
@@ -22,19 +22,6 @@
               </tr>
             </tbody>
           </table>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center pt-4">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
         </div>
       </div>
     </div>
@@ -80,5 +67,9 @@ export default {
   width: 20%;
   border-width: 3px;
   border-style: solid;
+}
+
+caption {
+  visibility: hidden;
 }
 </style>

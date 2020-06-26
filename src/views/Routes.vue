@@ -1,6 +1,6 @@
 <template>
   <div class="routes">
-    <vue-title :title="'Rotas'"></vue-title>
+    <vue-title title="Rotas"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">Rotas</h1>
@@ -281,5 +281,9 @@ form {
   width: 35%;
   border-width: 3px;
   border-style: solid;
+}
+
+caption {
+  visibility: hidden;
 }
 </style>

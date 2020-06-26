@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <vue-title :title="'City Details - ' + this.cityDetails.data.name"></vue-title>
+    <vue-title :title="'Detalhes de Cidade - ' + this.cityDetails.data.name"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 v-if="this.cityDetails.data" class="display-4">{{ this.cityDetails.data.name }}</h1>

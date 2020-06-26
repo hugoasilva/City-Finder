@@ -24,7 +24,7 @@
           <li
             v-for="(result, i) in results"
             :key="i"
-            @click="$router.push('/' + selected + '/' + (selected == 'cities' ? result.id : result.code))"
+            @click="isOpen = false, $router.push('/' + selected + '/' + (selected == 'cities' ? result.id : result.code))"
             class="autocomplete-result pl-3"
           >{{ selected == 'cities' ? result.name + ", " + result.country : result.name + ", " + result.code}}</li>
         </ul>
@@ -125,5 +125,9 @@ export default {
 .autocomplete-result:hover {
   background-color: #2a60e0;
   color: white;
+}
+
+label {
+  visibility: hidden;
 }
 </style>

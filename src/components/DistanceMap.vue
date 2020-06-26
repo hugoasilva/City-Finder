@@ -19,13 +19,13 @@ export default {
   },
   methods: {
     initMap() {
-      this.map = L.map("map").setView([50.27264, 7.26469], 13);
+      this.map = L.map("map").setView([38.7436056, -9.2304153], 13);
       console.log(this.map)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '© OpenStreetMap contributors'
       }).addTo(this.map);
 
-      L.Routing.control({
+      L.Path({
           waypoints: [
             L.latLng(38.7436056, -9.2304153),
             L.latLng(38.5334477, -0.1312811)

@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <vue-title :title="'Currency Details - ' + currencyDetails.code"></vue-title>
+    <vue-title :title="'Detalhes de Moeda - ' + currencyDetails.code"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">{{ currencyDetails.code }}</h1>
@@ -67,5 +67,9 @@ h2 {
   width: 20%;
   border-width: 3px;
   border-style: solid;
+}
+
+caption {
+  visibility: hidden;
 }
 </style>

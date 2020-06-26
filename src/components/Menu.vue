@@ -60,4 +60,6 @@ export default {
   display: block;
   height: 100px;
 }
+
+
 </style>

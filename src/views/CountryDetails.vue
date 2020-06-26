@@ -13,11 +13,11 @@
           <caption>Países</caption>
           <tbody>
             <tr>
-              <th scope="row">Código</th>
+              <td scope="row">Código</td>
               <td v-if="this.countryDetails.data">{{ countryDetails.data.code }}</td>
             </tr>
             <tr>
-              <th scope="row">Moeda</th>
+              <td scope="row">Moeda</td>
               <td v-if="this.countryDetails.data">
                 <router-link
                   :to="'/currencies/' + countryDetails.data.currencyCodes[0]"
@@ -28,7 +28,7 @@
               </td>
             </tr>
             <tr>
-              <th scope="row">Nr Regiões</th>
+              <td scope="row">Nr Regiões</td>
               <td v-if="this.countryDetails.data">{{ countryDetails.data.numRegions }}</td>
             </tr>
           </tbody>
@@ -89,5 +89,9 @@ h2 {
   height: 100px;
   border-width: 3px;
   border-style: solid;
+}
+
+caption {
+  visibility: hidden;
 }
 </style>

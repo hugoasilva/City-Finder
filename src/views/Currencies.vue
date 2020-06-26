@@ -54,4 +54,8 @@ h2 {
   border-width: 3px;
   border-style: solid;
 }
+
+caption {
+  visibility: hidden;
+}
 </style>
