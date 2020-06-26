@@ -1,13 +1,10 @@
 <template>
   <div>
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-primary"
-      style="background-color: #e3f2fd;"
-    >
-      <a class="navbar-brand" href="/">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background-color: #e3f2fd;">
+      <router-link class="navbar-brand" to="/">
         <Logo />
-      </a>
-      <a class="navbar-brand" href="/">City Finder</a>
+      </router-link>
+      <router-link class="navbar-brand" to="/">City Finder</router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -23,46 +20,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/">Início</a>
+            <router-link class="nav-link" to="/">Início</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/countries">Países</a>
+            <router-link class="nav-link" to="/countries">Países</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/cities">Cidades</a>
+            <router-link class="nav-link" to="/cities">Cidades</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/routes">Rotas</a>
+            <router-link class="nav-link" to="/routes">Rotas</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/currencies">Moedas</a>
+            <router-link class="nav-link" to="/currencies">Moedas</router-link>
           </li>
         </ul>
         <div class="search">
           <Search />
-        </div>
-        <div class="dropdown">
-          <button
-            class="btn btn-secondary btn-light dropdown-toggle"
-            type="button"
-            id="dropdownMenu"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Língua
-          </button>
-          <div
-            class="dropdown-menu dropdown-menu-right"
-            aria-labelledby="dropdownMenu"
-          >
-            <button class="dropdown-item" type="button">
-              <img src="@/assets/en.png" alt="English" /> English
-            </button>
-            <button class="dropdown-item" type="button">
-              <img src="@/assets/pt.png" alt="Português" /> Português
-            </button>
-          </div>
         </div>
       </div>
     </nav>

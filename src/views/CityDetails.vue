@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <vue-title v-if="this.cityDetails.data" :title="'City Details - ' + this.cityDetails.data.name"></vue-title>
+    <vue-title :title="'City Details - ' + this.cityDetails.data.name"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 v-if="this.cityDetails.data" class="display-4">{{ this.cityDetails.data.name }}</h1>
@@ -8,10 +8,15 @@
           <thead>
             <th v-if="this.cityDetails.data" class="bg-primary" colspan="2">{{ this.cityDetails.data.name }}</th>
           </thead>
+          <caption>Cidade</caption>
           <tbody>
             <tr>
               <th scope="row">País</th>
-              <td v-if="this.cityDetails.data"><a v-bind:href="'/countries/' + this.cityDetails.data.countryCode">{{ this.cityDetails.data.country }}</a></td>
+              <td v-if="this.cityDetails.data">
+                <router-link 
+                  :to="'/countries/' + this.cityDetails.data.countryCode">{{ this.cityDetails.data.country }}
+                </router-link>
+              </td>
             </tr>
             <tr>
               <th scope="row">Região</th>
@@ -98,7 +103,7 @@ export default {
       this.time.localTime = this.time[0]
       
     } catch (e) {
-      window.location = "/404"
+      this.$router.push('/404');
       console.error(e);
     }
     

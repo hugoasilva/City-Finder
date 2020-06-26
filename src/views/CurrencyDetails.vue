@@ -4,32 +4,30 @@
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">{{ currencyDetails.code }}</h1>
-        <p class="lead">
-          Esta moeda é usada nos seguintes países:
-        </p>
+        <p class="lead">Esta moeda é usada nos seguintes países:</p>
         <table class="table currencyTable">
           <thead>
             <th class="bg-primary" colspan="2"></th>
           </thead>
+          <caption>Moeda</caption>
           <tbody>
             <tr v-for="country in currencyDetails.countryCodes" v-bind:key="country">
               <th scope="row">
-                <a
-                  v-bind:href="'/countries/' + country"
+                <router-link
+                  :to="'/countries/' + country"
                   class="list-group-item-action"
-                  >{{ country }}
-                </a>
+                >{{ country }}</router-link>
               </th>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>   
+    </div>
   </div>
 </template>
 
 <script>
-import Currencies from "../assets/currencies.json"
+import Currencies from "../assets/currencies.json";
 
 export default {
   name: "app",
@@ -42,21 +40,17 @@ export default {
   mounted() {
     let currencyId = this.$route.params.id;
 
-    for (let i = 0; i < Currencies.data.length; i++){
-      console.log(Currencies.data[i].code, currencyId)
-      if (Currencies.data[i].code == currencyId){
+    for (let i = 0; i < Currencies.data.length; i++) {
+      if (Currencies.data[i].code == currencyId) {
         this.currencyDetails = Currencies.data[i];
         break;
-      }
-      else {
+      } else {
         this.currencyDetails = 0;
       }
     }
     if (this.currencyDetails == 0) {
-      window.location = "/404"
+      this.$router.push('/404');
     }
-
-    console.log(this.currencyDetails)
   }
 };
 </script>

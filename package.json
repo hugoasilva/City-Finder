@@ -12,6 +12,7 @@
     "bootstrap": "^4.5.0",
     "core-js": "^3.6.5",
     "leaflet": "^1.6.0",
+    "leaflet-routing-machine": "^3.2.12",
     "lodash": "^4.17.15",
     "vue": "^2.6.11",
     "vue-bing-maps": "0.0.4",

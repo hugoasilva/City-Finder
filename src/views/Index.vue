@@ -14,16 +14,17 @@
           <h2>Conheça as 10 cidades mais populosas</h2>
           <table class="table cityTable">
             <thead>
+              <caption>Cidade</caption>
               <th class="bg-primary">Cidade</th>
             </thead>
             <tbody>
               <tr v-for="city in mostPopulated.data" :key="city.id">
                 <th scope="row">
-                  <a
-                    v-bind:href="'/cities/' + city.id"
+                  <router-link
+                    :to="'/cities/' + city.id"
                     class="list-group-item-action"
                     >{{ city.city }}
-                  </a>
+                  </router-link>
                 </th>
               </tr>
             </tbody>
@@ -31,7 +32,6 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 

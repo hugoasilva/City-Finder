@@ -2,14 +2,17 @@
   <div id="search">
     <form class="form-inline my-2 my-lg-0">
       <div class="form-group m-2">
-        <select class="form-control" v-model="selected">
-          <option selected value="city">Cidade</option>
-          <option value="country">País</option>
+        <label for="selector">Selecionar</label>
+        <select id="selector" class="form-control" @change="onChange()" v-model="selected">
+          <option selected value="cities">Cidade</option>
+          <option value="countries">País</option>
         </select>
       </div>
       <div class="autocomplete">
+        <label for="searchInput"></label>
         <input
-          class="form-control mr-sm-2 "
+          id="searchInput"
+          class="form-control mr-sm-2"
           type="text"
           v-model="search"
           placeholder="Pesquise um país ou cidade..."
@@ -17,34 +20,35 @@
           size="21"
           @input="debounceMethod"
         />
-        <ul v-show="isOpen" class="autocomplete-results" clickaway="away">
-          <li class="loading" v-if="isLoading">Loading results...</li>
+        <ul v-show="isOpen" class="autocomplete-results" v-on-clickaway="away">
           <li
-            v-else
             v-for="(result, i) in results"
             :key="i"
-            @click="setResult(result)"
+            @click="$router.push('/' + selected + '/' + (selected == 'cities' ? result.id : result.code))"
             class="autocomplete-result pl-3"
-          >{{ result.city + ", " + result.country }}</li>
+          >{{ selected == 'cities' ? result.name + ", " + result.country : result.name + ", " + result.code}}</li>
         </ul>
       </div>
-      <button class="btn btn-secondary btn-light my-2 my-sm-0 mr-sm-2" type="submit">Pesquisar</button>
+      <router-link
+        class="btn btn-secondary btn-light my-2 my-sm-0 mr-sm-2"
+        :to="'/' + selected + '?search=' + search"
+      >Pesquisar</router-link>
     </form>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import debounce from "lodash/debounce"
-import { mixin as clickaway } from 'vue-clickaway';
+import debounce from "lodash/debounce";
+import { mixin as clickaway } from "vue-clickaway";
 
 export default {
-  mixins: [ clickaway ],
+  mixins: [clickaway],
   data() {
     return {
       search: "",
       results: [],
-      selected: "city",
+      selected: "cities",
       isAsync: {
         type: Boolean,
         default: false
@@ -56,14 +60,15 @@ export default {
   },
   computed: {
     debounceMethod() {
-      return debounce(this.onChange, 1000)
-    },
+      return debounce(this.onChange, 1000);
+    }
   },
   methods: {
     async onChange() {
+      this.isOpen = false;
       try {
         const search = await axios.get(
-          "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&namePrefix=" +
+          `https://wft-geo-db.p.rapidapi.com/v1/geo/${this.selected}?limit=10&namePrefix=` +
             this.search,
           {
             method: "GET",
@@ -78,37 +83,35 @@ export default {
       } catch (e) {
         console.log(e);
       }
-      // console.log(this.results);
       this.isOpen = true;
-      if(this.search == "") {
+      if (this.search == "") {
         this.isOpen = false;
       }
     },
+    away: function() {
+      this.isOpen = false;
+    }
   },
-  away: function() {
-    console.log("oi")
-    this.isOpen = false;
-  }
 };
 </script>
 
 <style scoped>
 .autocomplete-results {
-    position: absolute;
-    z-index: 1000;
-    cursor: default;
-    padding: 0;
-    margin-top: 0.5px;
-    list-style: none;
-    background-color: #eeeeee;
-    border: 1px solid #ccc;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 10px;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    width: 15.5%;
+  position: absolute;
+  z-index: 1000;
+  cursor: default;
+  padding: 0;
+  margin-top: 0.5px;
+  list-style: none;
+  background-color: #eeeeee;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  width: 15.5%;
 }
 
 .autocomplete-result {

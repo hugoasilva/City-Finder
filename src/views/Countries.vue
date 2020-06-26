@@ -9,14 +9,15 @@
             <thead>
               <th class="bg-primary">País</th>
             </thead>
+            <caption>País</caption>
             <tbody>
-              <tr v-for="country in countries.data" v-bind:key="country">
+              <tr v-for="country in countries.data" v-bind:key="country.code">
                 <th scope="row">
-                  <a
-                    v-bind:href="'/countries/' + country.code"
+                  <router-link
+                    :to="'/countries/' + country.code"
                     class="list-group-item-action"
                     >{{ country.name }}
-                  </a>
+                  </router-link>
                 </th>
               </tr>
             </tbody>
@@ -37,7 +38,6 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 

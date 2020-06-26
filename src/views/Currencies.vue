@@ -1,6 +1,6 @@
 <template>
   <div class="currencies">
-    <vue-title :title="'City List'"></vue-title>
+    <vue-title :title="'Lista de Moedas'"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">Moedas</h1>
@@ -9,14 +9,15 @@
             <thead>
               <th class="bg-primary">Moedas</th>
             </thead>
+            <caption>Moedas</caption>
             <tbody>
-              <tr v-for="currency in Currencies.data.slice(0, 10)" v-bind:key="currency">
+              <tr v-for="currency in Currencies.data.slice(0, 10)" v-bind:key="currency.code">
                 <th scope="row">
-                  <a
-                    v-bind:href="'/currencies/' + currency.code"
+                  <router-link
+                    :to="'/currencies/' + currency.code"
                     class="list-group-item-action"
                     >{{ currency.code }}
-                  </a>
+                  </router-link>
                 </th>
               </tr>
             </tbody>
