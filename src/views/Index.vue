@@ -48,7 +48,7 @@ export default {
   async created() {
     try {
       const res = await axios.get(
-        "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&minPopulation=14220000",
+        "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&minPopulation=14220000&languageCode=pt",
         {
           method: "GET",
           headers: {

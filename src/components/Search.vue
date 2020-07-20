@@ -29,10 +29,10 @@
           >{{ selected == 'cities' ? result.name + ", " + result.country : result.name + ", " + result.code}}</li>
         </ul>
       </div>
-      <router-link
+      <a
         class="btn btn-secondary btn-light my-2 my-sm-0 mr-sm-2"
-        :to="'/' + selected + '?search=' + search"
-      >Pesquisar</router-link>
+        :href="'/' + selected + '?search=' + search"
+      >Pesquisar</a>
     </form>
   </div>
 </template>
@@ -69,7 +69,7 @@ export default {
       try {
         const search = await axios.get(
           `https://wft-geo-db.p.rapidapi.com/v1/geo/${this.selected}?limit=10&namePrefix=` +
-            this.search,
+            this.search + "&languageCode=pt",
           {
             method: "GET",
             headers: {

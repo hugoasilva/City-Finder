@@ -69,7 +69,7 @@ export default {
     try {
       const city = await axios.get(
         "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" + 
-          this.$route.params.id,
+          this.$route.params.id + "?languageCode=pt",
         {
           method: "GET",
           headers: {

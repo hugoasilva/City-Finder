@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <vue-title :title="'Country Details - ' + countryDetails.data.name"></vue-title>
+    <vue-title :title="'Detalhes de País - ' + countryDetails.data.name"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 v-if="this.countryDetails.data" class="display-4">{{ countryDetails.data.name }}</h1>
@@ -52,7 +52,7 @@ export default {
     try {
       const res = await axios.get(
         "https://wft-geo-db.p.rapidapi.com/v1/geo/countries/" +
-          this.$route.params.id,
+          this.$route.params.id  + "?languageCode=pt",
         {
           method: "GET",
           headers: {

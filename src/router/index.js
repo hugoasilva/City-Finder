@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Index from "../views/Index.vue";
 import Cities from "../views/Cities.vue";
+import CitiesNearCity from "../views/CitiesNearCity.vue";
 import CityDetails from "../views/CityDetails.vue";
 import Countries from "../views/Countries.vue";
 import CountryDetails from "../views/CountryDetails.vue";
@@ -22,6 +23,11 @@ const routes = [
     path: "/cities",
     name: "Cities",
     component: Cities,
+  },
+  {
+    path: "/citiesnearcity",
+    name: "Cities Near City",
+    component: CitiesNearCity,
   },
   {
     path: "/cities/:id",

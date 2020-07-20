@@ -43,7 +43,6 @@ export default {
   },
   computed: {
     search() {
-      console.log("fdsfsd")
       return this.$route.query.search ?? "";
     }
   },
@@ -57,7 +56,7 @@ export default {
       try {
         const res = await axios.get(
           "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&namePrefix="
-            + this.search,
+            + this.search + "&languageCode=pt",
           {
             method: "GET",
             headers: {

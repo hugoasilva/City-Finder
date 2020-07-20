@@ -1,74 +1,37 @@
 <template>
-  <div class="routes">
-    <vue-title title="Rotas"></vue-title>
+  <div class="citiesnearcity">
+    <vue-title :title="'Cidades Próximas de uma Cidade'"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
-        <h1 class="display-4">Rotas</h1>
+        <h1 class="display-4">Cidades Próximas de uma Cidade</h1>
         <div class="text-center">
-          <div id="search1">
+          <div id="search">
             <form class="form-inline my-2 my-lg-0 pt-4">
               <div class="autocomplete">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Partida</span>
+                    <span class="input-group-text">Cidade:</span>
                   </div>
                   <label for="first"></label>
                   <input
                     id="first"
                     class="form-control mr-sm-2"
                     type="text"
-                    v-model="search1"
+                    v-model="search"
                     placeholder="Selecione uma cidade..."
                     aria-label="Search"
                     size="30"
-                    @input="setBox(searchBox1)"
+                    @input="setBox(searchBox)"
                   />
                   <ul
-                    v-show="isOpen1"
+                    v-show="isOpen"
                     class="autocomplete-results"
                     v-on-clickaway="away"
                   >
                     <li
                       v-for="(result, i) in results"
                       :key="i"
-                      @click="setFirst(result.id)"
-                      class="autocomplete-result pl-3"
-                    >
-                      {{ result.name + ", " + result.country }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div id="search2">
-            <form class="form-inline my-2 my-lg-0 pt-4 pb-3">
-              <div class="autocomplete">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Chegada</span>
-                  </div>
-                  <label for="first"></label>
-                  <input
-                    id="final"
-                    class="form-control mr-sm-2"
-                    type="text"
-                    v-model="search2"
-                    placeholder="Selecione uma cidade..."
-                    aria-label="Search"
-                    size="30"
-                    @input="setBox(searchBox2)"
-                  />
-                  <ul
-                    v-show="isOpen2"
-                    class="autocomplete-results"
-                    v-on-clickaway="away"
-                  >
-                    <li
-                      v-for="(result, i) in results"
-                      :key="i"
-                      @click="setFinal(result.id)"
+                      @click="setCity(result.id)"
                       class="autocomplete-result pl-3"
                     >
                       {{ result.name + ", " + result.country }}
@@ -80,28 +43,48 @@
           </div>
           <router-link
             class="btn btn-secondary btn-light my-2 my-sm-0 mr-sm-2"
-            :to="'/routes' + '?first=' + first + '&final=' + final"
+            :to="'/citiesnearcity' + '?city=' + city"
             >Pesquisar</router-link
           >
-          <table v-if="cityDistance.data" class="table distance mt-4">
-            <caption>Distância</caption>
-            <thead>
-              <th class="bg-primary" colspan="2"></th>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Distância</th>
-                <td>{{ cityDistance.data }} km</td>
-              </tr>
-            </tbody>
-          </table>
-          <DistanceMap v-if="cityDistance.data"
-            firstLat="57.74"
-            firstLong="11.94"
-            finalLat="57.6792"
-            finalLong="11.949"
-          />
         </div>
+        <table v-if="citiesNearCity.data" class="table cityTable mt-4">
+          <caption>
+            Cidades Próximas
+          </caption>
+          <thead>
+            <th class="bg-primary" colspan="2"></th>
+          </thead>
+          <tbody>
+            <tr v-for="city in citiesNearCity.data" v-bind:key="city.id">
+              <th scope="row">
+                <router-link
+                  :to="'/cities/' + city.id"
+                  class="list-group-item-action"
+                  >{{ city.city }}</router-link
+                >
+              </th>
+            </tr>
+          </tbody>
+        </table>
+        <nav v-if="citiesNearCity.data" aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li
+              v-for="i in this.totalCount - 1"
+              v-bind:key="i"
+              class="page-item"
+            >
+              <a
+                class="page-link disabled"
+                :href="'/citiesnearcity' + '?city=' + getCity + '&page=' + i"
+                >{{ i }}</a
+              >
+            </li>
+            <li class="page-item"><a class="page-link">Next</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
@@ -112,43 +95,37 @@ import axios from "axios";
 import debounce from "lodash/debounce";
 import { mixin as clickaway } from "vue-clickaway";
 
-import DistanceMap from "../components/DistanceMap.vue";
-
 export default {
-  components: {
-    DistanceMap,
-  },
   mixins: [clickaway],
   data() {
     return {
-      search1: "",
-      search2: "",
+      search: "",
       results: [],
-      searchTerm: "",
-      searchBox1: true,
-      searchBox2: false,
-      first: "",
-      final: "",
+      city: "",
       isAsync: {
         type: Boolean,
         default: false,
       },
       isLoading: false,
       arrowCounter: 0,
-      isOpen1: false,
-      isOpen2: false,
-      cityDistance: [],
+      isOpen: false,
+      citiesNearCity: [],
+      totalCount: 0,
     };
   },
   async created() {
     this.getResults();
   },
   computed: {
-    getFirst() {
-      return this.$route.query.first ?? "";
+    getCity() {
+      return this.$route.query.city ?? "";
     },
-    getFinal() {
-      return this.$route.query.final ?? "";
+    getOffset() {
+      if (this.$route.query.page) {
+        return this.$route.query.page * 10;
+      } else {
+        return 0;
+      }
     },
     debounceMethod() {
       return debounce(this.onChange, 1000);
@@ -161,17 +138,11 @@ export default {
   },
   methods: {
     async onChange() {
-      this.isOpen1 = false;
-      this.isOpen2 = false;
-      if (this.searchBox == true) {
-        this.searchTerm = this.search1;
-      } else if (this.searchBox == false) {
-        this.searchTerm = this.search2;
-      }
+      this.isOpen = false;
       try {
         const search = await axios.get(
-          "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&namePrefix=" +
-            this.searchTerm,
+          "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=10&languageCode=pt&namePrefix=" +
+            this.search,
           {
             method: "GET",
             headers: {
@@ -185,38 +156,29 @@ export default {
       } catch (e) {
         console.log(e);
       }
-      if (this.searchBox == true) {
-        this.isOpen1 = true;
-        this.isOpen2 = false;
-      } else if (this.searchBox == false) {
-        this.isOpen1 = false;
-        this.isOpen2 = true;
-      } else {
-        this.isOpen1 = false;
-        this.isOpen2 = false;
+      this.isOpen = true;
+      if (this.search == "") {
+        this.isOpen = false;
       }
     },
     away: function() {
-      this.isOpen1 = false;
-      this.isOpen2 = false;
+      this.isOpen = false;
     },
     setBox: function(searchBox) {
       this.searchBox = searchBox;
       this.debounceMethod();
     },
-    setFirst: function(id) {
-      this.first = id;
-    },
-    setFinal: function(id) {
-      this.final = id;
+    setCity: function(id) {
+      this.city = id;
+      this.isOpen = false;
     },
     async getResults() {
       try {
         const res = await axios.get(
           "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" +
-            this.getFirst +
-            "/distance?distanceUnit=km&fromCityId=" +
-            this.getFinal,
+            this.getCity +
+            "/nearbyCities/?radius=15&limit=10&languageCode=pt&offset=" +
+            this.getOffset,
           {
             method: "GET",
             headers: {
@@ -226,8 +188,10 @@ export default {
             },
           }
         );
-        this.cityDistance = res.data;
-        console.log(this.cityDistance.data);
+        this.citiesNearCity = res.data;
+        this.totalCount = Math.ceil(
+          this.citiesNearCity.metadata.totalCount / 10
+        );
       } catch (e) {
         console.error(e);
       }
@@ -285,5 +249,14 @@ form {
 
 caption {
   visibility: hidden;
+}
+
+.cityTable {
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+  border-width: 3px;
+  border-style: solid;
 }
 </style>

@@ -34,6 +34,9 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/currencies">Moedas</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/citiesnearcity">Cidades Próximas de Cidade</router-link>
+          </li>
         </ul>
         <div class="search">
           <Search />

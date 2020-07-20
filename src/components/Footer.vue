@@ -1,7 +1,7 @@
 <template>
   <div>
     <footer class="footer">
-      Last update: 24/06/2020.<br />
+      Last update: 20/07/2020.<br />
       The HTML code of this page is validated by
       <a href="https://validator.w3.org/">HTML W3C Validator</a>.<br />
       The CSS code is validated by
