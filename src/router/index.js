@@ -4,6 +4,7 @@ import Index from "../views/Index.vue";
 import Cities from "../views/Cities.vue";
 import CitiesNearCity from "../views/CitiesNearCity.vue";
 import CityDetails from "../views/CityDetails.vue";
+import MostPopulatedCities from "../views/MostPopulatedCities.vue"
 import Countries from "../views/Countries.vue";
 import CountryDetails from "../views/CountryDetails.vue";
 import Currencies from "../views/Currencies.vue";
@@ -28,6 +29,11 @@ const routes = [
     path: "/citiesnearcity",
     name: "Cities Near City",
     component: CitiesNearCity,
+  },
+  {
+    path: "/mostpopulated",
+    name: "Most populated cities",
+    component: MostPopulatedCities,
   },
   {
     path: "/cities/:id",
@@ -63,7 +69,7 @@ const routes = [
     path: "/404",
     name: "404 - Not Found",
     component: NotFound,
-  }
+  },
 ];
 
 const router = new VueRouter({

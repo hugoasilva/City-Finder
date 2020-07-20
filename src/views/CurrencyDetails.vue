@@ -1,6 +1,8 @@
 <template>
   <div class="text-center">
-    <vue-title :title="'Detalhes de Moeda - ' + currencyDetails.code"></vue-title>
+    <vue-title
+      :title="'Detalhes de Moeda - ' + currencyDetails.code"
+    ></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">{{ currencyDetails.code }}</h1>
@@ -9,14 +11,20 @@
           <thead>
             <th class="bg-primary" colspan="2"></th>
           </thead>
-          <caption>Moeda</caption>
+          <caption>
+            Moeda
+          </caption>
           <tbody>
-            <tr v-for="country in currencyDetails.countryCodes" v-bind:key="country">
+            <tr
+              v-for="country in currencyDetails.countryCodes"
+              v-bind:key="country"
+            >
               <th scope="row">
                 <router-link
                   :to="'/countries/' + country"
                   class="list-group-item-action"
-                >{{ country }}</router-link>
+                  >{{ country }}</router-link
+                >
               </th>
             </tr>
           </tbody>
@@ -34,7 +42,7 @@ export default {
   data() {
     return {
       Currencies,
-      currencyDetails: []
+      currencyDetails: [],
     };
   },
   mounted() {
@@ -49,9 +57,9 @@ export default {
       }
     }
     if (this.currencyDetails == 0) {
-      this.$router.push('/404');
+      this.$router.push("/404");
     }
-  }
+  },
 };
 </script>
 

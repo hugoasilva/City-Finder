@@ -1,17 +1,16 @@
 <template>
-  <div id="map">
-  </div>
+  <div id="map"></div>
 </template>
 
 <script>
-import L from "leaflet"
+import L from "leaflet";
 
 export default {
   name: "Map",
   data: function() {
     return {
       map: null,
-      tileLayer: null
+      tileLayer: null,
     };
   },
   mounted() {
@@ -19,28 +18,27 @@ export default {
   },
   methods: {
     initMap() {
-      this.map= L.map('map').setView([this.lat, this.long],11);
-      this.tileLayer= 
-          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');  
-      this.tileLayer.addTo(this.map); 
+      this.map = L.map("map").setView([this.lat, this.long], 11);
+      this.tileLayer = L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png");
+      this.tileLayer.addTo(this.map);
       L.circle([this.lat, this.long], {
-          color: "red",
-          fillColor: "#f03",
-          fillOpacity: 0.5,
-          radius: 5000.0
-      }).addTo(this.map);       
-    }
+        color: "red",
+        fillColor: "#f03",
+        fillOpacity: 0.5,
+        radius: 5000.0,
+      }).addTo(this.map);
+    },
   },
   props: {
     lat: Number,
-    long: Number
-  }
+    long: Number,
+  },
 };
 </script>
 
 <style>
 #map {
-  width: 600px; 
+  width: 600px;
   height: 400px;
   margin-bottom: 100px;
   margin-left: auto;

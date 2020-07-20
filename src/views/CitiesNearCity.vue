@@ -23,19 +23,13 @@
                     size="30"
                     @input="setBox(searchBox)"
                   />
-                  <ul
-                    v-show="isOpen"
-                    class="autocomplete-results"
-                    v-on-clickaway="away"
-                  >
+                  <ul v-show="isOpen" class="autocomplete-results" v-on-clickaway="away">
                     <li
                       v-for="(result, i) in results"
                       :key="i"
                       @click="setCity(result.id)"
                       class="autocomplete-result pl-3"
-                    >
-                      {{ result.name + ", " + result.country }}
-                    </li>
+                    >{{ result.name + ", " + result.country }}</li>
                   </ul>
                 </div>
               </div>
@@ -44,13 +38,10 @@
           <router-link
             class="btn btn-secondary btn-light my-2 my-sm-0 mr-sm-2"
             :to="'/citiesnearcity' + '?city=' + city"
-            >Pesquisar</router-link
-          >
+          >Pesquisar</router-link>
         </div>
         <table v-if="citiesNearCity.data" class="table cityTable mt-4">
-          <caption>
-            Cidades Próximas
-          </caption>
+          <caption>Cidades Próximas</caption>
           <thead>
             <th class="bg-primary" colspan="2"></th>
           </thead>
@@ -60,29 +51,19 @@
                 <router-link
                   :to="'/cities/' + city.id"
                   class="list-group-item-action"
-                  >{{ city.city }}</router-link
-                >
+                >{{ city.city }}</router-link>
               </th>
             </tr>
           </tbody>
         </table>
         <nav v-if="citiesNearCity.data" aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-              <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li
-              v-for="i in this.totalCount - 1"
-              v-bind:key="i"
-              class="page-item"
-            >
+            <li v-for="i in this.totalCount" v-bind:key="i" class="page-item">
               <a
                 class="page-link disabled"
                 :href="'/citiesnearcity' + '?city=' + getCity + '&page=' + i"
-                >{{ i }}</a
-              >
+              >{{ i }}</a>
             </li>
-            <li class="page-item"><a class="page-link">Next</a></li>
           </ul>
         </nav>
       </div>
@@ -104,13 +85,13 @@ export default {
       city: "",
       isAsync: {
         type: Boolean,
-        default: false,
+        default: false
       },
       isLoading: false,
       arrowCounter: 0,
       isOpen: false,
       citiesNearCity: [],
-      totalCount: 0,
+      totalCount: 0
     };
   },
   async created() {
@@ -122,19 +103,19 @@ export default {
     },
     getOffset() {
       if (this.$route.query.page) {
-        return this.$route.query.page * 10;
+        return (this.$route.query.page - 1) * 10;
       } else {
         return 0;
       }
     },
     debounceMethod() {
       return debounce(this.onChange, 1000);
-    },
+    }
   },
   watch: {
     $route() {
       this.getResults();
-    },
+    }
   },
   methods: {
     async onChange() {
@@ -148,8 +129,8 @@ export default {
             headers: {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
               "x-rapidapi-key":
-                "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da",
-            },
+                "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
+            }
           }
         );
         this.results = search.data.data;
@@ -184,19 +165,18 @@ export default {
             headers: {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
               "x-rapidapi-key":
-                "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da",
-            },
+                "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
+            }
           }
         );
         this.citiesNearCity = res.data;
-        this.totalCount = Math.ceil(
-          this.citiesNearCity.metadata.totalCount / 10
-        );
+        this.totalCount =
+          Math.ceil(this.citiesNearCity.metadata.totalCount / 10) - 1;
       } catch (e) {
         console.error(e);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -9,9 +9,14 @@
             <thead>
               <th class="bg-primary">Moedas</th>
             </thead>
-            <caption>Moedas</caption>
+            <caption>
+              Moedas
+            </caption>
             <tbody>
-              <tr v-for="currency in Currencies.data.slice(0, 10)" v-bind:key="currency.code">
+              <tr
+                v-for="currency in Currencies.data.slice(0, 10)"
+                v-bind:key="currency.code"
+              >
                 <th scope="row">
                   <router-link
                     :to="'/currencies/' + currency.code"
@@ -29,7 +34,7 @@
 </template>
 
 <script>
-import Currencies from "../assets/currencies.json"
+import Currencies from "../assets/currencies.json";
 
 export default {
   name: "app",

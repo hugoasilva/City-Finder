@@ -3,7 +3,12 @@
     <form class="form-inline my-2 my-lg-0">
       <div class="form-group m-2">
         <label for="selector">Selecionar</label>
-        <select id="selector" class="form-control" @change="onChange()" v-model="selected">
+        <select
+          id="selector"
+          class="form-control"
+          @change="onChange()"
+          v-model="selected"
+        >
           <option selected value="cities">Cidade</option>
           <option value="countries">País</option>
         </select>
@@ -24,15 +29,30 @@
           <li
             v-for="(result, i) in results"
             :key="i"
-            @click="isOpen = false, $router.push('/' + selected + '/' + (selected == 'cities' ? result.id : result.code))"
+            @click="
+              (isOpen = false),
+                $router.push(
+                  '/' +
+                    selected +
+                    '/' +
+                    (selected == 'cities' ? result.id : result.code)
+                )
+            "
             class="autocomplete-result pl-3"
-          >{{ selected == 'cities' ? result.name + ", " + result.country : result.name + ", " + result.code}}</li>
+          >
+            {{
+              selected == "cities"
+                ? result.name + ", " + result.country
+                : result.name + ", " + result.code
+            }}
+          </li>
         </ul>
       </div>
       <a
         class="btn btn-secondary btn-light my-2 my-sm-0 mr-sm-2"
         :href="'/' + selected + '?search=' + search"
-      >Pesquisar</a>
+        >Pesquisar</a
+      >
     </form>
   </div>
 </template>
@@ -51,17 +71,17 @@ export default {
       selected: "cities",
       isAsync: {
         type: Boolean,
-        default: false
+        default: false,
       },
       isLoading: false,
       arrowCounter: 0,
-      isOpen: false
+      isOpen: false,
     };
   },
   computed: {
     debounceMethod() {
       return debounce(this.onChange, 1000);
-    }
+    },
   },
   methods: {
     async onChange() {
@@ -69,14 +89,15 @@ export default {
       try {
         const search = await axios.get(
           `https://wft-geo-db.p.rapidapi.com/v1/geo/${this.selected}?limit=10&namePrefix=` +
-            this.search + "&languageCode=pt",
+            this.search +
+            "&languageCode=pt",
           {
             method: "GET",
             headers: {
               "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
               "x-rapidapi-key":
-                "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
-            }
+                "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da",
+            },
           }
         );
         this.results = search.data.data;
@@ -90,7 +111,7 @@ export default {
     },
     away: function() {
       this.isOpen = false;
-    }
+    },
   },
 };
 </script>

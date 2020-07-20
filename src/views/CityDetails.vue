@@ -1,34 +1,49 @@
 <template>
   <div class="text-center">
-    <vue-title :title="'Detalhes de Cidade - ' + this.cityDetails.data.name"></vue-title>
+    <vue-title
+      :title="'Detalhes de Cidade - ' + this.cityDetails.data.name"
+    ></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
-        <h1 v-if="this.cityDetails.data" class="display-4">{{ this.cityDetails.data.name }}</h1>
+        <h1 v-if="this.cityDetails.data" class="display-4">
+          {{ this.cityDetails.data.name }}
+        </h1>
         <table class="table cityTable">
           <thead>
-            <th v-if="this.cityDetails.data" class="bg-primary" colspan="2">{{ this.cityDetails.data.name }}</th>
+            <th v-if="this.cityDetails.data" class="bg-primary" colspan="2">
+              {{ this.cityDetails.data.name }}
+            </th>
           </thead>
-          <caption>Cidade</caption>
+          <caption>
+            Cidade
+          </caption>
           <tbody>
             <tr>
               <th scope="row">País</th>
               <td v-if="this.cityDetails.data">
-                <router-link 
-                  :to="'/countries/' + this.cityDetails.data.countryCode">{{ this.cityDetails.data.country }}
+                <router-link
+                  :to="'/countries/' + this.cityDetails.data.countryCode"
+                  >{{ this.cityDetails.data.country }}
                 </router-link>
               </td>
             </tr>
             <tr>
               <th scope="row">Região</th>
-              <td v-if="this.cityDetails.data">{{ this.cityDetails.data.region }}</td>
+              <td v-if="this.cityDetails.data">
+                {{ this.cityDetails.data.region }}
+              </td>
             </tr>
             <tr>
               <th scope="row">População</th>
-              <td v-if="this.cityDetails.data">{{ this.cityDetails.data.population }}</td>
+              <td v-if="this.cityDetails.data">
+                {{ this.cityDetails.data.population }}
+              </td>
             </tr>
             <tr>
               <th scope="row">Código Área</th>
-              <td v-if="this.cityDetails.data">{{ this.cityDetails.data.regionCode }}</td>
+              <td v-if="this.cityDetails.data">
+                {{ this.cityDetails.data.regionCode }}
+              </td>
             </tr>
             <tr>
               <th scope="row">Hora Local</th>
@@ -40,79 +55,89 @@
             </tr>
           </tbody>
         </table>
-        <h2 v-if="this.cityDetails.data">{{ this.cityDetails.data.name }} no mapa</h2>
+        <h2 v-if="this.cityDetails.data">
+          {{ this.cityDetails.data.name }} no mapa
+        </h2>
         <div id="map">
-          <Map  v-if="this.cityDetails.data" :lat="this.cityDetails.data.latitude" :long="this.cityDetails.data.longitude" />
+          <Map
+            v-if="this.cityDetails.data"
+            :lat="this.cityDetails.data.latitude"
+            :long="this.cityDetails.data.longitude"
+          />
         </div>
       </div>
-    </div>    
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Map from "../components/Map.vue"
+import Map from "../components/Map.vue";
 
 export default {
   name: "app",
   components: {
-    Map
+    Map,
   },
   data() {
     return {
       cityDetails: [],
       time: [],
-      weather: []
+      weather: [],
     };
   },
   async created() {
     try {
       const city = await axios.get(
-        "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" + 
-          this.$route.params.id + "?languageCode=pt",
+        "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" +
+          this.$route.params.id +
+          "?languageCode=pt",
         {
           method: "GET",
           headers: {
             "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
             "x-rapidapi-key":
-              "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
-          }
+              "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da",
+          },
         }
       );
       this.cityDetails = city.data;
-      
-      const weather = await axios.get("https://api.openweathermap.org/data/2.5/weather?lat=" +
-        this.cityDetails.data.latitude + "&lon=" + this.cityDetails.data.longitude + 
-        "&appid=70d3a999d3c296c94f63808ba7d299e5&units=metric")
+
+      const weather = await axios.get(
+        "https://api.openweathermap.org/data/2.5/weather?lat=" +
+          this.cityDetails.data.latitude +
+          "&lon=" +
+          this.cityDetails.data.longitude +
+          "&appid=70d3a999d3c296c94f63808ba7d299e5&units=metric"
+      );
       this.weather.data = weather.data.main.temp;
 
-      await this.sleep(1000)
+      await this.sleep(1000);
       const time = await axios.get(
         "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" +
-          this.$route.params.id + "/time",
+          this.$route.params.id +
+          "/time",
         {
           method: "GET",
           headers: {
             "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
             "x-rapidapi-key":
-              "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
-          }
+              "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da",
+          },
         }
       );
       this.time = time.data.data.split(".");
-      this.time.localTime = this.time[0]
-      
+      this.time.localTime = this.time[0];
     } catch (e) {
-      this.$router.push('/404');
+      this.$router.push("/404");
       console.error(e);
     }
-    
   },
   methods: {
     sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-  }
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+  },
 };
 </script>
 

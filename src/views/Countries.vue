@@ -1,6 +1,6 @@
 <template>
   <div class="countries">
-  <vue-title title="Lista de Paíes"></vue-title>
+    <vue-title title="Lista de Paíes"></vue-title>
     <div class="col-md-8 offset-md-2 text-center pt-4">
       <div class="jumbotron">
         <h1 class="display-4">Países</h1>
@@ -9,7 +9,9 @@
             <thead>
               <th class="bg-primary">País</th>
             </thead>
-            <caption>País</caption>
+            <caption>
+              País
+            </caption>
             <tbody>
               <tr v-for="country in countries.data" v-bind:key="country.code">
                 <th scope="row">
@@ -35,7 +37,7 @@ export default {
   name: "app",
   data() {
     return {
-      countries: []
+      countries: [],
     };
   },
   async created() {
@@ -47,15 +49,15 @@ export default {
           headers: {
             "x-rapidapi-host": "wft-geo-db.p.rapidapi.com",
             "x-rapidapi-key":
-              "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da"
-          }
+              "7caeb4b0d3msh4ea7c1098d55578p1f43f7jsn8c4002ec36da",
+          },
         }
       );
       this.countries = res.data;
     } catch (e) {
       console.error(e);
     }
-  }
+  },
 };
 </script>
 

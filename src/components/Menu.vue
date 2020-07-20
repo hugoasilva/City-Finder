@@ -1,6 +1,9 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background-color: #e3f2fd;">
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-primary"
+      style="background-color: #e3f2fd;"
+    >
       <router-link class="navbar-brand" to="/">
         <Logo />
       </router-link>
@@ -35,7 +38,14 @@
             <router-link class="nav-link" to="/currencies">Moedas</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/citiesnearcity">Cidades Próximas de Cidade</router-link>
+            <router-link class="nav-link" to="/citiesnearcity"
+              >Cidades Próximas</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/mostpopulated"
+              >Cidades Mais Populosas</router-link
+            >
           </li>
         </ul>
         <div class="search">
@@ -53,8 +63,8 @@ import Search from "./Search.vue";
 export default {
   components: {
     Logo,
-    Search
-  }
+    Search,
+  },
 };
 </script>
 
@@ -63,6 +73,4 @@ export default {
   display: block;
   height: 100px;
 }
-
-
 </style>

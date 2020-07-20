@@ -84,7 +84,9 @@
             >Pesquisar</router-link
           >
           <table v-if="cityDistance.data" class="table distance mt-4">
-            <caption>Distância</caption>
+            <caption>
+              Distância
+            </caption>
             <thead>
               <th class="bg-primary" colspan="2"></th>
             </thead>
@@ -95,7 +97,8 @@
               </tr>
             </tbody>
           </table>
-          <DistanceMap v-if="cityDistance.data"
+          <DistanceMap
+            v-if="cityDistance.data"
             firstLat="57.74"
             firstLong="11.94"
             finalLat="57.6792"
